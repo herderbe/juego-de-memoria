@@ -22,11 +22,13 @@ let duplicarAlfabeto = [...alfabeto.slice(0, cantidad / 2), ...alfabeto.slice(0,
 
 
 let caras = `<div class="adelante"></div><div class="atras"></div>'`
-let aleatoria = duplicarAlfabeto.sort(() => 0.5 - Math.random())
+
 
 function Juegar(){
     segundos()
     crearCartas()
+    movimentos.textContent = 0
+    coincidencias = 0
 }
 
 mas.addEventListener('click',()=>{
@@ -40,6 +42,9 @@ menos.addEventListener('click',()=>{
     }
 })
 function segundos(){
+    if ( segundo.textContent > 1){
+        clearInterval(tiempo)
+    }
     segundo.textContent = 0
     tiempo = setInterval(() => {
     segundo.textContent ++
@@ -47,6 +52,7 @@ function segundos(){
 }
 function crearCartas(){
     tarjetas = [];
+    let aleatoria = duplicarAlfabeto.sort(() => 0.5 - Math.random())
     contTajetas.innerHTML = ''; 
     for (let index = 0; index < cantidad; index++) {
         let div = document.createElement('div')
@@ -89,7 +95,6 @@ btnJugar.addEventListener('click',Juegar)
 
 function evento(){
     tarjetas.forEach(t =>{
-        console.log(t)
         t.addEventListener('click', function (){
             rotar(t)
         } )})
