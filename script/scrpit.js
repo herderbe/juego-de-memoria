@@ -18,9 +18,6 @@ let alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
                 'Y', 'Z'];
-let duplicarAlfabeto = [...alfabeto.slice(0, cantidad / 2), ...alfabeto.slice(0, cantidad / 2)]
-
-
 let caras = `<div class="adelante"></div><div class="atras"></div>'`
 
 
@@ -32,11 +29,13 @@ function Juegar(){
 }
 
 mas.addEventListener('click',()=>{
-    cantidad+=2
-    cant.textContent = cantidad
+    if(cantidad < 52){
+        cantidad+=2
+        cant.textContent = cantidad
+    }
 })
 menos.addEventListener('click',()=>{
-    if(cantidad>10){
+    if(cantidad > 10){
         cantidad-=2
         cant.textContent = cantidad
     }
@@ -52,6 +51,7 @@ function segundos(){
 }
 function crearCartas(){
     tarjetas = [];
+    let duplicarAlfabeto = [...alfabeto.slice(0, cantidad / 2), ...alfabeto.slice(0, cantidad / 2)]
     let aleatoria = duplicarAlfabeto.sort(() => 0.5 - Math.random())
     contTajetas.innerHTML = ''; 
     for (let index = 0; index < cantidad; index++) {
@@ -75,6 +75,8 @@ function rotar (t) {
             movimentos.textContent ++
         }
         if (cartasVolteadas[0].querySelector('.atras').textContent === cartasVolteadas[1].querySelector('.atras').textContent) {
+            cartasVolteadas[0].classList.add('deshabilitada')
+            cartasVolteadas[1].classList.add('deshabilitada')
             coincidencias++;
             if (coincidencias === cantidad / 2) {
                 mostrarAlertPersonalizado('Has completado el juego!')
